@@ -5,10 +5,10 @@ export default `<!doctype html>
   <title>BlogPage</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles-5INURTSO.css"></head>
+  <link rel="icon" type="image/x-icon" href="icon.ico">
+<style>*{box-sizing:border-box;margin:0;padding:0}html{font-size:16px}body{font-family:Arial,sans-serif;line-height:1.6;color:#333;overflow-x:hidden}</style><link rel="stylesheet" href="styles-5RUYDJ4L.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-5RUYDJ4L.css"></noscript></head>
 <body ngcm="">
   <app-root></app-root>
-<script src="polyfills-B6TNHZQ6.js" type="module"></script><script src="main-KFWBXM3Z.js" type="module"></script></body>
+<script src="polyfills-B6TNHZQ6.js" type="module"></script><script src="main-IZJ2YUEV.js" type="module"></script></body>
 </html>
 `;

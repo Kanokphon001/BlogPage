@@ -17,12 +17,12 @@ import { Home} from './home/home';
     CommonModule,
     RouterOutlet,
     Header,
-    Welcome,
-    Outtro,
-    Member,
-    InfoSection,
+    //Welcome,
+    //Outtro,
+    //Member,
+    //InfoSection,
     Footer,
-    Home
+    //Home
   ],
   templateUrl: './app.html', 
   styleUrl: './app.css'     
