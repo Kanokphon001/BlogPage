@@ -1,0 +1,11 @@
+<div [@zoomIn]><h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+    <p>{{ data.fullDescription }}</p>
+    <img *ngIf="data.imageUrl" [src]="data.imageUrl" alt="Card Image"
+        style="max-width: 100%; height: auto; display: block; margin-top: 15px;">
+    <p>More details about this exciting "Coming Soon" feature!</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="Onclose()">Close</button>
+</mat-dialog-actions>
+</div>

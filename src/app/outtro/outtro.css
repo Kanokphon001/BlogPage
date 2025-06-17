@@ -106,3 +106,221 @@
     height: 150px;
   }
 }
+
+/* --- 1. Placeholder สำหรับ Card เดิม (จองพื้นที่) --- */
+.card-placeholder {
+  width: 280px;
+  height: auto;
+  min-height: 380px;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: none;
+  padding: 25px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-radius: 8px;
+  position: relative; /* สำคัญสำหรับ Card ที่ position: absolute ภายใน */
+  transition: opacity 0.3s ease-out; /* เพื่อให้ Placeholder จางหายไปอย่าง Smooth */
+  z-index: 1;
+}
+
+/* ซ่อน Placeholder เมื่อ Card จริงๆ ลอยออกไป */
+.card-placeholder.hidden {
+  opacity: 0;
+  pointer-events: none; /* ป้องกันไม่ให้รับการคลิก */
+}
+
+/* --- 2 ตัว Card หลัก (ที่จะ Pop ออกมา) --- */
+.card_outro {
+  /* สไตล์เริ่มต้นของ Card (เมื่อยุบ) */
+  background-color: #fff; /* ใส่สีพื้นหลัง */
+  border-radius: 8px; /* ใส่ขอบโค้ง */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ใส่เงา */
+  /* padding: 25px; <--- **สำคัญ:** padding นี้คือของตัว card_outro เอง (เหมือน .card ปกติ) */
+  text-align: left;
+  cursor: pointer;
+
+  /* ตำแหน่งเริ่มต้น: อยู่ใน placeholder */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  /* Animation Properties */
+  transform: scale(1); /* ขนาดเริ่มต้น */
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), /* Transform transition */
+              top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              /* padding 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), */
+              z-index 0s ease-out 0.4s; /* Z-index เปลี่ยนหลัง Animation จบ */
+  z-index: 10; /* อยู่เหนือเนื้อหาปกติใน Layout */
+  overflow: hidden; /* ซ่อนเนื้อหาเกินในสถานะเริ่มต้น */
+}
+
+/* --- 3. สไตล์เมื่อ Card ถูกขยาย (เหมือนหยิบการ์ดขึ้นมา) --- */
+.card_outro.expanded-effect {
+  position: fixed; /* ทำให้ลอยอยู่กลาง viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.3); /* ขยับไปกลางจอและซูม 130% */
+  width: 75vw; /* ความกว้างเมื่อขยาย */
+  max-width: 800px; /* จำกัดความกว้างสูงสุด */
+  height: 85vh; /* ความสูงเมื่อขยาย */
+  max-height: 700px; /* จำกัดความสูงสูงสุด */
+  padding: 30px; /* เพิ่ม padding */
+  box-shadow: 0 15px 50px rgba(0,0,0,0.6); /* เงาที่โดดเด่นมาก */
+  border-radius: 12px; /* ขอบโค้งมนขึ้น */
+  z-index: 999; /* ให้ Card อยู่บนสุดของทุกสิ่ง */
+  overflow: auto; /* อนุญาตให้มี scrollbar ถ้าเนื้อหายาวเกิน */
+
+  /* Z-index เปลี่ยนทันทีเมื่อเริ่ม Animation (เพื่อให้ซ้อนทับได้ทันที) */
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              padding 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              z-index 0s; /* Z-index เปลี่ยนทันทีเมื่อเริ่ม Animation */
+}
+
+
+/* --- 4. การแสดง/ซ่อนเนื้อหาภายใน Card (Smooth Fade) --- */
+.card-content-collapsed,
+.card-content-expanded {
+  position: absolute; /* ทำให้ซ้อนทับกันได้ภายใน .card */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px; /* Padding เริ่มต้นของ Card */
+  box-sizing: border-box;
+  text-align: center; /* จัดกึ่งกลางเนื้อหาเริ่มต้น */
+
+  
+
+  opacity: 0; /* ซ่อนเริ่มต้น */
+  visibility: hidden; /* ซ่อนจากการคลิก */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* แสดงเนื้อหาเมื่อ Card ยุบ */
+.card-content-collapsed.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.2s; /* ให้เนื้อหาขยายจางหายไปก่อน แล้วเนื้อหาย่อค่อยปรากฏ */
+}
+
+/* แสดงเนื้อหาเมื่อ Card ขยาย */
+.card-content-expanded.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.2s; /* ให้เนื้อหาย่อจางหายไปก่อน แล้วเนื้อหาขยายค่อยปรากฏ */
+
+  display: flex; /* ใช้ flexbox เพื่อจัดวางเนื้อหาภายในที่ขยาย */
+  flex-direction: column;
+  align-items: center; /* จัดกึ่งกลางรูปและปุ่ม */
+  justify-content: flex-start; /* จัดวางเนื้อหาจากบนลงล่าง */
+  text-align: left; /* ข้อความอาจจะชิดซ้าย */
+  /* padding: 0; รีเซ็ต padding เพราะจัดการใน expanded-body */
+}
+
+/* ส่วนหัวของ Card ที่ขยาย (สำหรับรูปภาพและปุ่มปิด) */
+.expanded-header {
+  position: relative; /* สำหรับปุ่มปิด */
+  width: 100%;
+  padding-bottom: 10px 0 15px 0; /* เว้นระยะห่างด้านล่างรูป */
+  box-sizing: border-box;
+}
+
+/* ส่วนเนื้อหาหลักของ Card ที่ขยาย (สำหรับข้อความและปุ่ม Action) */
+.expanded-body {
+  width: 100%;
+  flex-grow: 1; /* ทำให้กินพื้นที่ที่เหลือใน flex container */
+  overflow-y: auto; /* มี Scrollbar ถ้าเนื้อหายาวเกิน */
+  padding: 0 10px 20px 10px; /* Padding ด้านข้างสำหรับเนื้อหา */
+}
+
+
+/* --- 5. Backdrop (พื้นหลังเบลอทั่วทั้งหน้าจอ) --- */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* เต็มความกว้างของ viewport */
+  height: 100vh; /* เต็มความสูงของ viewport */
+  background-color: rgba(0, 0, 0, 0.4); /* สีดำจางๆ */
+  backdrop-filter: blur(8px); /* เบลอพื้นหลัง */
+  -webkit-backdrop-filter: blur(8px); /* สำหรับ Safari */
+  z-index: 99; /* อยู่ใต้ Card ที่ขยาย แต่บนเนื้อหาอื่นๆ */
+  opacity: 0; /* เริ่มต้นที่โปร่งใส */
+  visibility: hidden; /* ซ่อนไว้ก่อน */
+  transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+}
+
+/* แสดง Backdrop เมื่อ Card ขยาย */
+.backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- 6. สไตล์ของ Element อื่นๆ ภายใน Card (ปรับตามต้องการ) --- */
+.card-image {
+  height: 150px;
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-image: url('https://via.placeholder.com/300x150?text=Coming+Soon'); /* รูปภาพสำหรับ Card ยุบ */
+  background-size: cover;
+  background-position: center;
+}
+
+.expanded-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* ปุ่มปิด (X) บน Card ที่ขยาย */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: #555;
+  cursor: pointer;
+  z-index: 101; /* ให้อยู่บนสุด */
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+
+/* ปุ่ม Action อื่นๆ (เช่น ดูรายละเอียดเพิ่มเติม, ติดต่อเรา) */
+.action-button {
+  display: block; /* หรือ flexbox/grid ตาม layout ที่ต้องการ */
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* สำหรับ <a> tag */
+  text-align: center;
+  width: calc(100% - 20px); /* เว้นระยะจากขอบ */
+}
+
+.action-button:hover {
+  background-color: #0056b3;
+}

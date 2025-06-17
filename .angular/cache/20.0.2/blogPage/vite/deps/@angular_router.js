@@ -1,6 +1,7 @@
 import {
   Title
-} from "./chunk-MD3MAY4C.js";
+} from "./chunk-QIGB7DYH.js";
+import "./chunk-OFIJTRDL.js";
 import {
   HashLocationStrategy,
   LOCATION_INITIALIZED,

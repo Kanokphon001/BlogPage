@@ -1,36 +1,72 @@
 <section class="outtro-section">
   <h2>Outro</h2>
-  <section class="outtro-section">
-    <div class="outtro-cards">
-      <div class="outtro-cards">
-        <a routerLink="/trailer" class="card">
+  <div class="outtro-cards">
+    <!-- <div class="outtro-cards">
+        <div class="card" (click)="openCardDetails($event)">
           <div class="card-image trailer-bg"></div>
-          <h3>Trailer</h3>
+          <h3 id="card-title">Trailer</h3>
+          <p id="card-short-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+          </div>
+      </div> -->
+    <div class="card-placeholder" [class.hidden]="isExpanded">
+      <div class="card_outro" [class.expanded-effect]="isExpanded" (click)="toggleExpand()">
+
+        <div class="card-content-collapsed" [class.active]="!isExpanded">
+          <div class="card-image coming-soon-bg"></div>
+          <h3>Coming Soon</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua.</p>
-        </a>
-      </div>
-      <div class="card">
-        <div class="card-image coming-soon-bg"></div>
-        <h3>Coming Soon</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua.</p>
-      </div>
-      <div class="outtro-cards">
-        <a routerLink="/story-board" class="card">
-          <div class="card-image story-board-bg"></div>
-          <h3>Story Board</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.</p>
-        </a>
-      </div>
-      <div class="outtro-cards">
-        <a routerLink="/support-us" class="card">
-          <div class="card-image support-us-bg"></div>
-          <h3>Support us</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.</p>
-        </a>
+        </div>
+
+        <div id="card-forward"class="card-content-expanded" [class.active]="isExpanded">
+          <div class="expanded-header">
+            <button class="close-button" (click)="toggleExpand($event)">X</button>
+            <div class="card-image trailer-bg"></div>
+          </div>
+          <div class="expanded-body">
+            <h3>Coming Soon: อัปเดตใหม่สุดพิเศษ!</h3>
+            <p>เตรียมพบกับฟีเจอร์ใหม่ที่น่าตื่นเต้น! เรากำลังพัฒนาประสบการณ์การใช้งานที่ดีขึ้น
+              พร้อมเนื้อหาพิเศษที่คุณไม่ควรพลาด ติดตามข่าวสารของเราเพื่อรับข้อมูลอัปเดตก่อนใคร!</p>
+            <p>รายละเอียดเพิ่มเติม: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+              in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            <a routerLink="/another-page" (click)="$event.stopPropagation()" class="action-button">
+              ดูรายละเอียดเพิ่มเติม
+            </a>
+            <button (click)="goToContactPage($event)" class="action-button">
+              ติดต่อเรา
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+
+    
+    <div class="card">
+      <div class="card-image coming-soon-bg"></div>
+      <h3>Coming Soon</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.</p>
+    </div>
+    <div class="outtro-cards">
+      <a routerLink="/story-board" class="card">
+        <div class="card-image story-board-bg"></div>
+        <h3>Story Board</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.</p>
+      </a>
+    </div>
+    <div class="outtro-cards">
+      <a routerLink="/support-us" class="card">
+        <div class="card-image support-us-bg"></div>
+        <h3>Support us</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.</p>
+      </a>
+    </div>
+  </div>
+</section>
+<div class="backdrop" [class.show]="isExpanded" (click)="toggleExpand()"></div>
